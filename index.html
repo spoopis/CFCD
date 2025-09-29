@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CROSSFIRE Countdown</title>
+  <style>
+    body {
+      font-family: monospace;
+      background: #0f0f0f;
+      color: #00ffcc;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      font-size: 2em;
+    }
+  </style>
+</head>
+<body>
+  <div id="countdown"></div>
+
+  <script>
+    const targetDate = new Date("June 16, 2027 00:00:00").getTime();
+
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const distance = targetDate - now;
+
+      if (distance < 0) {
+        document.getElementById("countdown").innerHTML = "CROSSFIRE HAS LAUNCHED ⚡";
+        return;
+      }
+
+      const msInYear = 1000 * 60 * 60 * 24 * 365.25;
+      const years = Math.floor(distance / msInYear);
+      const days = Math.floor((distance % msInYear) / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+      const milliseconds = distance % 1000;
+
+      document.getElementById("countdown").innerHTML =
+        `${years}y ${days}d ${hours}h ${minutes}m ${seconds}s ${milliseconds}ms`;
+    }
+
+    setInterval(updateCountdown, 50);
+  </script>
+</body>
+</html>
