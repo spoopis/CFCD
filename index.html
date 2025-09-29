@@ -1,52 +1,67 @@
-<script>
-  const targetDate = new Date("June 16, 2027 00:00:00").getTime();
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CROSSFIRE Countdown</title>
+  <style>
+    body {
+      font-family: monospace;
+      background: #0f0f0f;
+      color: #00ffcc;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      font-size: 2em;
+    }
+  </style>
+</head>
+<body>
+  <div id="countdown"></div>
 
-  function toRoman(num) {
-    const romanMap = [
-      { val: 1000, sym: "M" },
-      { val: 900, sym: "CM" },
-      { val: 500, sym: "D" },
-      { val: 400, sym: "CD" },
-      { val: 100, sym: "C" },
-      { val: 90, sym: "XC" },
-      { val: 50, sym: "L" },
-      { val: 40, sym: "XL" },
-      { val: 10, sym: "X" },
-      { val: 9, sym: "IX" },
-      { val: 5, sym: "V" },
-      { val: 4, sym: "IV" },
-      { val: 1, sym: "I" }
-    ];
-    let result = "";
-    for (const { val, sym } of romanMap) {
-      while (num >= val) {
-        result += sym;
-        num -= val;
+  <script>
+    const targetDate = new Date("June 16, 2027 00:00:00").getTime();
+
+    function toRoman(num) {
+      const romanMap = [
+        { val: 1000, sym: "M" }, { val: 900, sym: "CM" }, { val: 500, sym: "D" },
+        { val: 400, sym: "CD" }, { val: 100, sym: "C" }, { val: 90, sym: "XC" },
+        { val: 50, sym: "L" }, { val: 40, sym: "XL" }, { val: 10, sym: "X" },
+        { val: 9, sym: "IX" }, { val: 5, sym: "V" }, { val: 4, sym: "IV" }, { val: 1, sym: "I" }
+      ];
+      let result = "";
+      for (const { val, sym } of romanMap) {
+        while (num >= val) {
+          result += sym;
+          num -= val;
+        }
       }
-    }
-    return result || "N";
-  }
-
-  function updateCountdown() {
-    const now = new Date().getTime();
-    const distance = targetDate - now;
-
-    if (distance < 0) {
-      document.getElementById("countdown").innerHTML = "CROSSFIRE HAS LAUNCHED ⚡";
-      return;
+      return result || "N";
     }
 
-    const msInYear = 1000 * 60 * 60 * 24 * 365.25;
-    const years = Math.floor(distance / msInYear);
-    const days = Math.floor((distance % msInYear) / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-    const milliseconds = distance % 1000;
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const distance = targetDate - now;
 
-    document.getElementById("countdown").innerHTML =
-      `${toRoman(years)}y ${toRoman(days)}d ${toRoman(hours)}h ${toRoman(minutes)}m ${toRoman(seconds)}s ${toRoman(milliseconds)}ms`;
-  }
+      if (distance < 0) {
+        document.getElementById("countdown").innerHTML = "CROSSFIRE HAS LAUNCHED ⚡";
+        return;
+      }
 
-  setInterval(updateCountdown, 50);
-</script>
+      const msInYear = 1000 * 60 * 60 * 24 * 365.25;
+      const years = Math.floor(distance / msInYear);
+      const days = Math.floor((distance % msInYear) / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+      const milliseconds = distance % 1000;
+
+      document.getElementById("countdown").innerHTML =
+        `${toRoman(years)}y ${toRoman(days)}d ${toRoman(hours)}h ${toRoman(minutes)}m ${toRoman(seconds)}s ${toRoman(milliseconds)}ms`;
+    }
+
+    setInterval(updateCountdown, 50);
+  </script>
+</body>
+</html>
